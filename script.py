@@ -50,7 +50,7 @@ def daily_dictation():
         start_quiz_dictation = driver.find_elements_by_xpath("//input[@name='startQuiz' and @value='Start Quiz']")[0]
         start_quiz_dictation.click()
         time.sleep(5)
-
+        
         for ent in proxy.har['log']['entries']:
             if(ent['serverIPAddress'] == "202.9.85.28"
                 and ent['request']['url'] == "https://aliv.lecturer.pens.ac.id/wp-admin/admin-ajax.php"
@@ -74,9 +74,9 @@ def daily_dictation():
         check_btn.click()
         time.sleep(5)
         
-        finish_btn = driver.find_element_by_name('next')
-        finish_btn.click()
-        time.sleep(5)
+        # finish_btn = driver.find_element_by_name('next')
+        # finish_btn.click()
+        # time.sleep(5)
 
 def daily_grammar():
     for i in range(0, many):
