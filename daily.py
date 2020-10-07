@@ -74,9 +74,9 @@ def daily_dictation():
         check_btn.click()
         time.sleep(5)
         
-        # finish_btn = driver.find_element_by_name('next')
-        # finish_btn.click()
-        # time.sleep(5)
+        finish_btn = driver.find_element_by_name('next')
+        finish_btn.click()
+        time.sleep(5)
 
 def daily_grammar():
     for i in range(0, many):
