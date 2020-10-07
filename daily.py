@@ -1,17 +1,20 @@
 from selenium import webdriver
 from getpass import getpass
-import pprint
+import requests
+import calendar
 import time 
 import json
 from browsermobproxy import Server
 
 usr = input("Enter you email student: ")
 pwd = getpass("Enter your password: ")
-many = int(input("Enter how many : "))
 
 daily_dict = input("Daily dication(Yes/No): ")
 daily_gramm = input("Daily grammar(Yes/No): ")
+many = int(input("Enter how many : "))
 
+daily_voc = input("Daily Vocab(Yes/No): ")
+many_voc = int(input("Enter how many: "))
 
 #use your browsermob path
 server = Server("C:/browsermob-proxy-2.1.4-bin/browsermob-proxy-2.1.4/bin/browsermob-proxy")
@@ -116,8 +119,58 @@ def daily_grammar():
         finish_btn.click()
         time.sleep(5)
 
+def daily_vocab():
+    driver.get('https://aliv.lecturer.pens.ac.id/advanced-vocabulary/')
+    cookies = driver.get_cookies()
+    time.sleep(5)        
+
+    s = requests.Session()
+    for cookie in cookies:
+        s.cookies.set(cookie['name'], cookie['value'])
+
+
+    skrip = driver.find_elements_by_xpath("//script[contains(text(), 'H5PIntegration')]")
+    token = skrip[0].get_property('innerText')[216:226]
+
+    headers = {
+        'Connection': 'keep-alive',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'Origin': 'https://aliv.lecturer.pens.ac.id',
+                'Sec-Fetch-Site': 'same-origin',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Dest': 'empty',
+                'Referer': 'https://aliv.lecturer.pens.ac.id/advanced-vocabulary/',
+                'Accept-Language': 'en-US,en;q=0.9,id;q=0.8,jv;q=0.7'
+    }
+
+    params = (
+                ('token', token),
+                ('action', 'h5p_setFinished'),
+            )
+
+    for i in range(0, many_voc):
+        ts = calendar.timegm(time.gmtime())
+        finished = ts + 55
+        data = {
+            'contentId': '28',
+            'score': '10',
+            'maxScore': '10',
+            'opened': str(ts),
+            'finished': str(finished)
+        }
+        response = requests.post('https://aliv.lecturer.pens.ac.id/wp-admin/admin-ajax.php', headers=headers, params=params, cookies=s.cookies.get_dict(), data=data)
+        print(response.content)
+        print('---------------')
+        time.sleep(60)
+
 if( daily_dict.lower() == 'yes' or daily_dict.lower() == 'y'):
     daily_dictation()
                 
 if (daily_gramm.lower() == 'yes' or daily_gramm.lower() == 'y'):
     daily_grammar()
+
+if (daily_voc.lower() == 'yes' or daily_voc.lower() == 'y'):
+    daily_vocab()
