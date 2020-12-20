@@ -1,0 +1,30 @@
+Running BrowserMob Proxy using LittleProxy implementation. To revert to the legacy implementation, run the proxy with the command-line option '--use-littleproxy false'.
+[INFO  2020-12-20T10:20:58,402 net.lightbody.bmp.proxy.Main] (main) Starting BrowserMob Proxy version 2.1.4 
+[INFO  2020-12-20T10:20:58,441 org.eclipse.jetty.util.log] (main) jetty-7.x.y-SNAPSHOT 
+[INFO  2020-12-20T10:20:58,764 org.eclipse.jetty.util.log] (main) started o.e.j.s.ServletContextHandler{/,null} 
+[WARN  2020-12-20T10:20:58,899 org.eclipse.jetty.util.log] (main) FAILED SelectChannelConnector@0.0.0.0:8080: java.net.BindException: Address already in use: bind 
+[WARN  2020-12-20T10:20:58,899 org.eclipse.jetty.util.log] (main) FAILED org.eclipse.jetty.server.Server@31000e60: java.net.BindException: Address already in use: bind 
+[ERROR 2020-12-20T10:20:58,899 net.lightbody.bmp.proxy.Main] (main) Failed to start Jetty server. Aborting. java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method) ~[?:1.8.0_241]
+	at sun.nio.ch.Net.bind(Unknown Source) ~[?:1.8.0_241]
+	at sun.nio.ch.Net.bind(Unknown Source) ~[?:1.8.0_241]
+	at sun.nio.ch.ServerSocketChannelImpl.bind(Unknown Source) ~[?:1.8.0_241]
+	at sun.nio.ch.ServerSocketAdaptor.bind(Unknown Source) ~[?:1.8.0_241]
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:162) ~[browsermob-dist-2.1.4.jar:?]
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:356) ~[browsermob-dist-2.1.4.jar:?]
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:240) ~[browsermob-dist-2.1.4.jar:?]
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:55) ~[browsermob-dist-2.1.4.jar:?]
+	at org.eclipse.jetty.server.Server.doStart(Server.java:269) ~[browsermob-dist-2.1.4.jar:?]
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:55) ~[browsermob-dist-2.1.4.jar:?]
+	at net.lightbody.bmp.proxy.Main.main(Main.java:64) [browsermob-dist-2.1.4.jar:?]
+
+Exception in thread "main" net.lightbody.bmp.exception.JettyException: Unable [WARN  2020-12-20T10:21:10,940 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-0-ProxyToServerWorker-1) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.conn_close_code.1006.unknown:352|ms%22]}. Content will be treated as application/octet-stream 
+[WARN  2020-12-20T10:21:10,940 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-0-ProxyToServerWorker-3) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.conn_err.unknown:352|ms%22]}. Content will be treated as application/octet-stream 
+[WARN  2020-12-20T10:21:16,731 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-1-ProxyToServerWorker-1) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.restproxy.cookie.unknown:1|c%22]}. Content will be treated as application/octet-stream 
+[WARN  2020-12-20T10:21:16,731 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-1-ProxyToServerWorker-3) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.restproxy.ws_supported.unknown:1|c%22]}. Content will be treated as application/octet-stream 
+[WARN  2020-12-20T10:21:17,071 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-1-ProxyToServerWorker-1) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.conn_err.unknown:337|ms%22]}. Content will be treated as application/octet-stream 
+[WARN  2020-12-20T10:21:17,071 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-1-ProxyToServerWorker-3) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.conn_close_code.1006.unknown:339|ms%22]}. Content will be treated as application/octet-stream 
+[WARN  2020-12-20T10:21:47,440 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-1-ProxyToServerWorker-3) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.conn_err.unknown:368|ms%22]}. Content will be treated as application/octet-stream 
+[WARN  2020-12-20T10:21:47,440 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-1-ProxyToServerWorker-1) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.conn_close_code.1006.unknown:369|ms%22]}. Content will be treated as application/octet-stream 
+[WARN  2020-12-20T10:22:17,788 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-1-ProxyToServerWorker-1) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.conn_err.unknown:345|ms%22]}. Content will be treated as application/octet-stream 
+[WARN  2020-12-20T10:22:17,788 net.lightbody.bmp.filters.HarCaptureFilter] (LittleProxy-1-ProxyToServerWorker-3) No content type specified in response from /boom.gif?v=0.9&u=https://public-api.wordpress.com/pinghub&json={%22beacons%22:[%22pinghub.conn_close_code.1006.unknown:346|ms%22]}. Content will be treated as application/octet-stream 

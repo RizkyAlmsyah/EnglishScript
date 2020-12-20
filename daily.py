@@ -5,9 +5,13 @@ import calendar
 import time 
 import json
 from browsermobproxy import Server
+from webdriver_manager.chrome import ChromeDriverManager
 
 usr = input("Enter you email student: ")
 pwd = getpass("Enter your password: ")
+
+uts_rem = input("UTS REMED(Yes/No): ")
+many_uts = int(input("Enter how many : "))
 
 daily_dict = input("Daily dication(Yes/No): ")
 daily_gramm = input("Daily grammar(Yes/No): ")
@@ -52,7 +56,7 @@ def daily_dictation():
 
         start_quiz_dictation = driver.find_elements_by_xpath("//input[@name='startQuiz' and @value='Start Quiz']")[0]
         start_quiz_dictation.click()
-        time.sleep(5)
+        time.sleep(7)
         
         for ent in proxy.har['log']['entries']:
             if(ent['serverIPAddress'] == "202.9.85.28"
@@ -119,6 +123,52 @@ def daily_grammar():
         finish_btn.click()
         time.sleep(5)
 
+def uts_remdial():
+    driver.get('https://aliv.lecturer.pens.ac.id/uts-remedial/')
+    cookies = driver.get_cookies()
+    time.sleep(5)        
+
+    s = requests.Session()
+    for cookie in cookies:
+        s.cookies.set(cookie['name'], cookie['value'])
+
+    skrip = driver.find_elements_by_xpath("//script[contains(text(), 'H5PIntegration')]")
+    token = skrip[0].get_property('innerText')[216:226]
+
+    headers = {
+        'Connection': 'keep-alive',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'Origin': 'https://aliv.lecturer.pens.ac.id',
+                'Sec-Fetch-Site': 'same-origin',
+                'Sec-Fetch-Mode': 'cors',
+                'Sec-Fetch-Dest': 'empty',
+                'Referer': 'https://aliv.lecturer.pens.ac.id/uts-remedial/',
+                'Accept-Language': 'en-US,en;q=0.9,id;q=0.8,jv;q=0.7'
+    }
+
+    params = (
+                ('token', token),
+                ('action', 'h5p_setFinished'),
+            )
+
+    for i in range(0, many_uts):
+        ts = calendar.timegm(time.gmtime())
+        finished = ts + 1500
+        data = {
+            'contentId': '31',
+            'score': '21',
+            'maxScore': '21',
+            'opened': str(ts),
+            'finished': str(finished)
+        }
+        response = requests.post('https://aliv.lecturer.pens.ac.id/wp-admin/admin-ajax.php', headers=headers, params=params, cookies=s.cookies.get_dict(), data=data)
+        print(response.content)
+        print('---------------')
+        time.sleep(1200)
+
 def daily_vocab():
     driver.get('https://aliv.lecturer.pens.ac.id/advanced-vocabulary/')
     cookies = driver.get_cookies()
@@ -174,3 +224,6 @@ if (daily_gramm.lower() == 'yes' or daily_gramm.lower() == 'y'):
 
 if (daily_voc.lower() == 'yes' or daily_voc.lower() == 'y'):
     daily_vocab()
+
+if( uts_rem.lower() == 'yes' or uts_rem.lower() == 'y'):
+    uts_remdial()
